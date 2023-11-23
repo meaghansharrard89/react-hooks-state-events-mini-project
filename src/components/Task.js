@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 
 function Task( { text, category, handleDelete } ) {
+  
   function handleClick(){
     handleDelete(text);
     console.log('I was clicked')

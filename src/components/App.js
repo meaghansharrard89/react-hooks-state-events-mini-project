@@ -5,19 +5,31 @@ import TaskList from "./TaskList";
 import { CATEGORIES, TASKS } from "../data";
 
 function App() {
+  const [tasks, setTasks] = useState(TASKS);
+  const [filter, setFilter] = useState("All")
+  
+  function handleTaskFormSubmit(task) {
+    setTasks([...tasks, task])
+  }
 
-// const [tasks, setTasks] = useState(TASKS)
+  function handleCategoryFilter(selectedCategory) {
+    setFilter(selectedCategory)
+  }
 
-// function handleDelete(taskText) {
-//   setTasks(tasks.filter((task) => task,text !== taskText));
-// }
+  function isFiltered(item) {
+    if (filter === "All") {
+      return true
+    } else {
+      return item.category === filter
+    }
+  }
 
   return (
     <div className="App">
       <h2>My tasks</h2>
-      <CategoryFilter CATEGORIES={CATEGORIES} />
-      <NewTaskForm CATEGORIES={CATEGORIES} />
-      <TaskList TASKS={TASKS} />
+      <CategoryFilter categories={CATEGORIES} handleCategoryFilter={handleCategoryFilter} />
+      <NewTaskForm categories={CATEGORIES} onTaskFormSubmit={handleTaskFormSubmit} />
+      <TaskList tasks={tasks.filter(isFiltered)} setTasks={setTasks}/>
     </div>
   );
 }

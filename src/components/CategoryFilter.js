@@ -1,21 +1,27 @@
 import React, { useState } from "react";
 
-function CategoryFilter( { CATEGORIES } ) {
+function CategoryFilter( { categories, handleCategoryFilter } ) {
+  const [selectedCategory, setSelectedCategory] = useState("");
 
-  const [category, setCategory] = useState("");
-
-  function handleClick() {
-    setCategory('selected')
+  function handleClick(clickedCategory) {
+    setSelectedCategory(clickedCategory)
+    handleCategoryFilter(clickedCategory)
   }
 
   return (
     <div className="categories">
       <h5>Category filters</h5>
-      {CATEGORIES.map((category) => {
-        <button onClick={handleClick} key={category}>{category}</button>
-        console.log('I was clicked as a category')
-      })
-      }
+      {categories.map((category) => (
+        <button 
+        onClick={() =>
+          handleClick(category)
+        }     
+        key={category}
+        className={category === selectedCategory ? "selected" : ""}
+        >
+          {category}
+        </button>
+        ))}
     </div>
   );
 }
